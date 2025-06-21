@@ -55,9 +55,9 @@ async function main() {
     const tools = [];
     for (const [path, pathItem] of Object.entries(spec.paths || {})) {
       for (const [method, operation] of Object.entries(pathItem)) {
-        if (['get', 'post', 'put', 'delete', 'patch'].includes(method)) {
+        if (['get', 'post', 'put', 'delete', 'patch'].includes(method) && typeof operation === 'object') {
           const toolName = operation.operationId || 
-            `${method}_${path.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            `${method}_${path.replace(/[{}]/g, '').replace(/[^a-zA-Z0-9]/g, '_')}`;
           
           tools.push({
             name: toolName,
@@ -80,36 +80,7 @@ async function main() {
       }
     }
     
-    // List tools handler
-    server.setRequestHandler({
-      method: 'tools/list',
-      handler: async () => ({ tools })
-    });
-    
-    // Call tool handler
-    server.setRequestHandler({
-      method: 'tools/call',
-      handler: async (request) => {
-        const { name, arguments: args } = request.params;
-        
-        // Find the tool
-        const tool = tools.find(t => t.name === name);
-        if (!tool) {
-          throw new Error(`Tool not found: ${name}`);
-        }
-        
-        // In a real implementation, this would make actual API calls
-        // For now, return a mock response
-        return {
-          content: [{
-            type: 'text',
-            text: `Called ${name} with parameters: ${JSON.stringify(args)}\n\n` +
-                  `This is a simplified OpenAPI MCP server. ` +
-                  `In a full implementation, this would make actual API calls.`
-          }]
-        };
-      }
-    });
+    console.error(`Generated ${tools.length} tools from OpenAPI spec`);
     
     // Resources from schemas
     const resources = [];
@@ -124,16 +95,71 @@ async function main() {
       }
     }
     
-    // List resources handler
-    server.setRequestHandler({
-      method: 'resources/list',
-      handler: async () => ({ resources })
-    });
+    console.error(`Generated ${resources.length} resources from OpenAPI spec`);
     
-    // Read resource handler
-    server.setRequestHandler({
-      method: 'resources/read',
-      handler: async (request) => {
+    // Set up request handlers using the new format
+    server.setRequestHandler(
+      {
+        method: 'tools/list',
+        params: {}
+      },
+      async () => {
+        console.error('Handling tools/list request');
+        return { tools };
+      }
+    );
+    
+    server.setRequestHandler(
+      {
+        method: 'tools/call',
+        params: {
+          name: { type: 'string' },
+          arguments: { type: 'object', optional: true }
+        }
+      },
+      async (request) => {
+        console.error(`Handling tools/call for: ${request.params.name}`);
+        const { name, arguments: args } = request.params;
+        
+        // Find the tool
+        const tool = tools.find(t => t.name === name);
+        if (!tool) {
+          throw new Error(`Tool not found: ${name}`);
+        }
+        
+        // In a real implementation, this would make actual API calls
+        // For now, return a mock response
+        return {
+          content: [{
+            type: 'text',
+            text: `Called ${name} with parameters: ${JSON.stringify(args || {})}\n\n` +
+                  `This is a simplified OpenAPI MCP server. ` +
+                  `In a full implementation, this would make actual API calls to ${spec.servers?.[0]?.url || 'the API'}.`
+          }]
+        };
+      }
+    );
+    
+    server.setRequestHandler(
+      {
+        method: 'resources/list',
+        params: {}
+      },
+      async () => {
+        console.error('Handling resources/list request');
+        return { resources };
+      }
+    );
+    
+    server.setRequestHandler(
+      {
+        method: 'resources/read',
+        params: {
+          uri: { type: 'string' }
+        }
+      },
+      async (request) => {
+        console.error(`Handling resources/read for: ${request.params.uri}`);
         const { uri } = request.params;
         const schemaName = uri.replace('schema://', '');
         const schema = spec.components?.schemas?.[schemaName];
@@ -150,14 +176,21 @@ async function main() {
           }]
         };
       }
-    });
+    );
     
     // Connect to stdio transport
+    console.error('Connecting to stdio transport...');
     const transport = new StdioServerTransport();
     await server.connect(transport);
     
-    console.error('OpenAPI MCP Server running');
-    console.error(`Tools: ${tools.length}, Resources: ${resources.length}`);
+    console.error('OpenAPI MCP Server is running');
+    console.error(`Available tools: ${tools.map(t => t.name).join(', ')}`);
+    
+    // Keep the process alive
+    process.on('SIGINT', () => {
+      console.error('Shutting down...');
+      process.exit(0);
+    });
     
   } catch (error) {
     console.error('Server error:', error);
