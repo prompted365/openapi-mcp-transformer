@@ -1,5 +1,5 @@
 {
-  "name": "openapi-mcp-transformer",
+  "name": "@prompted365/openapi-mcp-transformer",
   "version": "1.0.0",
   "description": "Transform OpenAPI specs into intelligent, context-aware MCP servers",
   "main": "dist/index.js",
@@ -15,8 +15,7 @@
     "start": "node dist/index.js",
     "test": "jest",
     "lint": "eslint src --ext .ts",
-    "prepare": "npm run build",
-    "postinstall": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -25,14 +24,20 @@
     "ai",
     "autonomous",
     "context-aware",
-    "model-context-protocol"
+    "model-context-protocol",
+    "claude",
+    "anthropic"
   ],
-  "author": "OpenAPI MCP Team",
+  "author": "Prompted365 <info@prompted365.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/prompted365/openapi-mcp-transformer.git"
   },
+  "bugs": {
+    "url": "https://github.com/prompted365/openapi-mcp-transformer/issues"
+  },
+  "homepage": "https://github.com/prompted365/openapi-mcp-transformer#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0",
     "@apidevtools/json-schema-ref-parser": "^11.1.0",
@@ -62,8 +67,12 @@
   },
   "files": [
     "dist",
-    "src",
     "README.md",
-    "LICENSE"
-  ]
+    "LICENSE",
+    "EXAMPLES.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
