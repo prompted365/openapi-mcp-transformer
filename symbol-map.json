@@ -1,0 +1,122 @@
+[
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/index.ts",
+    "symbols": [
+      "OpenAPIMCPTransformer",
+      "createCLI",
+      "OpenAPISpec",
+      "PathItem",
+      "Operation",
+      "Parameter",
+      "RequestBody",
+      "MediaType",
+      "Response",
+      "Header",
+      "Link",
+      "Callback",
+      "Reference",
+      "TransformerConfig",
+      "SpecAnalysis",
+      "AnalyzedEndpoint",
+      "AnalyzedResource",
+      "WorkflowPattern",
+      "WorkflowStep",
+      "ResourceRelationship",
+      "ErrorPattern",
+      "APICapabilities"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/cli/index.ts",
+    "symbols": []
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/core/context-manager.ts",
+    "symbols": [
+      "ContextManager"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/core/intelligence-engine.ts",
+    "symbols": [
+      "IntelligenceEngine"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/core/spec-analyzer.ts",
+    "symbols": [
+      "SpecAnalyzer"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/types/analysis.ts",
+    "symbols": [
+      "SpecAnalysis",
+      "AnalyzedEndpoint",
+      "AnalyzedResource",
+      "WorkflowPattern",
+      "WorkflowStep",
+      "ResourceRelationship",
+      "ErrorPattern",
+      "APICapabilities"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/types/config.ts",
+    "symbols": [
+      "TransformerConfig"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/types/index.ts",
+    "symbols": [
+      "OpenAPISpec",
+      "PathItem",
+      "Operation",
+      "Parameter",
+      "RequestBody",
+      "MediaType",
+      "Response",
+      "Header",
+      "Link",
+      "Callback",
+      "Reference",
+      "TransformerConfig",
+      "SpecAnalysis",
+      "AnalyzedEndpoint",
+      "AnalyzedResource",
+      "WorkflowPattern",
+      "WorkflowStep",
+      "ResourceRelationship",
+      "ErrorPattern",
+      "APICapabilities"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/types/openapi.ts",
+    "symbols": [
+      "OpenAPISpec",
+      "PathItem",
+      "Operation",
+      "Parameter",
+      "RequestBody",
+      "MediaType",
+      "Response",
+      "Header",
+      "Link",
+      "Callback",
+      "Reference"
+    ]
+  },
+  {
+    "file": "/workspace/openapi-mcp-transformer/src/utils/logger.ts",
+    "symbols": [
+      "setLogLevel",
+      "logger",
+      "logDebug",
+      "logInfo",
+      "logWarn",
+      "logError"
+    ]
+  }
+]

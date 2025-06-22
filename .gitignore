@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 *.js
+!scripts/*.mjs
 *.d.ts
 *.js.map
 
