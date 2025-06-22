@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "node bin/simple-server.js",
-    "test": "node bin/simple-server.js https://petstore3.swagger.io/api/v3/openapi.json"
+    "test": "node bin/simple-server.js https://petstore3.swagger.io/api/v3/openapi.json",
+    "generate:mappings": "node scripts/generate-symbol-map.mjs",
+    "refactor:impact": "node scripts/refactor-impact.mjs"
   },
   "keywords": [
     "mcp",
@@ -49,5 +51,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "ts-morph": "^26.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
